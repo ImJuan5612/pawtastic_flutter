@@ -3,9 +3,9 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 class SupabaseConfig {
   // Reemplaza estas URLs con las de tu proyecto en Supabase
-  static const String supabaseUrl = 'https://jbojtpcynltczlkegmsp.supabase.co';
+  static const String supabaseUrl = 'https://qgdrvjcjflumviomjouf.supabase.co';
   static const String supabaseAnonKey =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Impib2p0cGN5bmx0Y3psa2VnbXNwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDg0NzU2NTMsImV4cCI6MjA2NDA1MTY1M30.CKw9xve-wmGQcNeZ9UhERata0TozSlmEjzmJonJjzTI'; // Encuentra esto en Project Settings > API
+      'sb_publishable_FuJOZmb88jySvrZBwW3xIw_8Hp4PqOG'; // Encuentra esto en Project Settings > API
 
   // Constantes para storage
   static const String petsBucket = 'pets';

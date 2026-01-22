@@ -9,6 +9,7 @@ class Profile {
   final String email;
   final DateTime createdAt;
   final DateTime updatedAt;
+  final double walletBalance; // Añadir el campo para el saldo
 
   Profile({
     required this.id,
@@ -21,6 +22,7 @@ class Profile {
     required this.email,
     required this.createdAt,
     required this.updatedAt,
+    this.walletBalance = 0.0,
   });
 
   factory Profile.fromJson(Map<String, dynamic> json) {
@@ -35,6 +37,7 @@ class Profile {
       email: json['email'] as String,
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
+      walletBalance: (json['wallet_balance'] as num?)?.toDouble() ?? 0.0,
     );
   }
 
@@ -50,6 +53,7 @@ class Profile {
       'email': email,
       'created_at': createdAt.toIso8601String(),
       'updated_at': updatedAt.toIso8601String(),
+      'wallet_balance': walletBalance,
     };
   }
 
@@ -60,7 +64,8 @@ class Profile {
     String? direccion,
     String? ciudad,
     String? codigoPostal,
-    String? email,
+    String? email,    
+    double? walletBalance,
   }) {
     return Profile(
       id: id,
@@ -73,6 +78,7 @@ class Profile {
       email: email ?? this.email,
       createdAt: createdAt,
       updatedAt: DateTime.now(),
+      walletBalance: walletBalance ?? this.walletBalance,
     );
   }
 }

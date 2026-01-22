@@ -59,11 +59,15 @@ class PetProvider extends ChangeNotifier {
         }
       }
 
+      final petData = pet.toJson();
+      // Si el ID es una cadena vacía (indicando nueva mascota), quitarlo del mapa
+      // para que Supabase genere el UUID automáticamente.
+      if (petData['id'] != null && petData['id'] is String && (petData['id'] as String).isEmpty) {
+        petData.remove('id');
+      }
+
       final response = await SupabaseConfig.client
-          .from('pets')
-          .insert(pet.toJson())
-          .select()
-          .single();
+          .from('pets').insert(petData).select().single();
 
       final newPet = Pet.fromJson(response);
       _pets.insert(0, newPet);
@@ -84,11 +88,21 @@ class PetProvider extends ChangeNotifier {
       _setLoading(true);
       _error = null;
 
+      String? oldImageUrl;
+      // Si estamos actualizando y la nueva URL de imagen es diferente (o null y antes había una),
+      // necesitamos la URL antigua para eliminarla.
+      if (pet.id.isNotEmpty) {
+        final existingPetIndex = _pets.indexWhere((p) => p.id == pet.id);
+        if (existingPetIndex != -1 && _pets[existingPetIndex].imageUrl != pet.imageUrl) {
+          oldImageUrl = _pets[existingPetIndex].imageUrl;
+        }
+      }
+
       // Validar que la URL de la imagen existe si se proporciona
-      if (pet.imageUrl != null) {
+      if (pet.imageUrl != null && pet.imageUrl != oldImageUrl) { // Solo validar si es una imagen nueva o diferente
         final imageExists = await _validateImageUrl(pet.imageUrl!);
         if (!imageExists) {
-          throw Exception('La imagen no se subió correctamente');
+          throw Exception('La nueva imagen no se subió correctamente o no es accesible.');
         }
       }
 
@@ -104,6 +118,11 @@ class PetProvider extends ChangeNotifier {
       if (index != -1) {
         _pets[index] = updatedPet;
         notifyListeners();
+      }
+
+      // Si había una imagen antigua y se cambió, eliminarla de Storage
+      if (oldImageUrl != null && oldImageUrl != updatedPet.imageUrl) {
+        await _deleteImage(oldImageUrl);
       }
     } catch (e) {
       _setError(e.toString());
@@ -143,12 +162,24 @@ class PetProvider extends ChangeNotifier {
   Future<bool> _validateImageUrl(String imageUrl) async {
     try {
       final uri = Uri.parse(imageUrl);
+      List<String> pathSegments = uri.pathSegments;
+      // La URL pública de Supabase es algo como: /storage/v1/object/public/BUCKET_NAME/path/to/file.png
+      // Necesitamos encontrar el nombre del bucket y tomar todo lo que sigue.
+      int bucketNameIndex = pathSegments.indexOf(SupabaseConfig.petsBucket);
+
+      if (bucketNameIndex == -1 || bucketNameIndex + 1 >= pathSegments.length) {
+        debugPrint('Error validando imagen: No se pudo encontrar el path del archivo en la URL: $imageUrl');
+        return false;
+      }
+      // Unir los segmentos después del nombre del bucket para obtener el path relativo
+      final String downloadPath = pathSegments.sublist(bucketNameIndex + 1).join('/');
+
       final response = await SupabaseConfig.client.storage
           .from(SupabaseConfig.petsBucket)
-          .download(uri.pathSegments.last);
+          .download(downloadPath);
       return response.isNotEmpty;
     } catch (e) {
-      debugPrint('Error validando imagen: $e');
+      debugPrint('Error validando imagen URL $imageUrl: $e');
       return false;
     }
   }
@@ -156,12 +187,18 @@ class PetProvider extends ChangeNotifier {
   Future<void> _deleteImage(String imageUrl) async {
     try {
       final uri = Uri.parse(imageUrl);
-      final path = '${SupabaseConfig.avatarsFolder}/${uri.pathSegments.last}';
+      List<String> pathSegments = uri.pathSegments;
+      int bucketNameIndex = pathSegments.indexOf(SupabaseConfig.petsBucket);
+      if (bucketNameIndex == -1 || bucketNameIndex + 1 >= pathSegments.length) {
+        debugPrint('Error eliminando imagen: No se pudo encontrar el path del archivo en la URL: $imageUrl');
+        return;
+      }
+      final String removePath = pathSegments.sublist(bucketNameIndex + 1).join('/');
       await SupabaseConfig.client.storage
           .from(SupabaseConfig.petsBucket)
-          .remove([path]);
+          .remove([removePath]);
     } catch (e) {
-      debugPrint('Error eliminando imagen: $e');
+      debugPrint('Error eliminando imagen URL $imageUrl: $e');
     }
   }
 }

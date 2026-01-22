@@ -3,7 +3,6 @@ import 'package:provider/provider.dart';
 import 'package:pawtastic/providers/auth_provider.dart';
 import 'package:pawtastic/screens/auth/login_screen.dart';
 import 'package:pawtastic/screens/main/home_screen.dart';
-// import 'package:pawtastic/widgets/app_logo.dart';
 import 'package:lottie/lottie.dart';
 import 'package:animate_do/animate_do.dart';
 

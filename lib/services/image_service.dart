@@ -30,9 +30,9 @@ class ImageService {
           throw Exception('Se requiere permiso de cámara');
         }
       } else {
-        final storagePermission = await _requestPermission(Permission.storage);
-        if (!storagePermission) {
-          throw Exception('Se requiere permiso de almacenamiento');
+        final photosPermission = await _requestPermission(Permission.photos);
+        if (!photosPermission) {
+          throw Exception('Se requiere permiso para acceder a las fotos');
         }
       }
 

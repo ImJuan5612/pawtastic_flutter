@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:pawtastic/providers/auth_provider.dart';
-import 'package:pawtastic/screens/main/home_screen.dart';
+import 'package:pawtastic/screens/auth/personal_data_screen.dart'; // Cambiado
 import 'package:animate_do/animate_do.dart';
 
 class RegisterScreen extends StatefulWidget {
@@ -73,8 +73,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
       if (!mounted) return;
 
       if (authProvider.isAuthenticated) {
-        Navigator.of(context).pushReplacement(
-          MaterialPageRoute(builder: (_) => const HomeScreen()),
+        Navigator.of(context).pushAndRemoveUntil( // Usar pushAndRemoveUntil para limpiar stack
+          MaterialPageRoute(builder: (_) => const PersonalDataScreen()), // Redirigir a PersonalDataScreen
+          (Route<dynamic> route) => false,
         );
       } else {
         ScaffoldMessenger.of(context).showSnackBar(

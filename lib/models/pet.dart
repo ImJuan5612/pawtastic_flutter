@@ -6,7 +6,9 @@ class Pet {
   final int age;
   final double weight;
   final String userId;
+  final String? gender;
   final String? imageUrl;
+
   Pet({
     required this.id,
     required this.name,
@@ -15,6 +17,7 @@ class Pet {
     required this.age,
     required this.weight,
     required this.userId,
+    this.gender,
     this.imageUrl,
   });
   factory Pet.fromJson(Map<String, dynamic> json) {
@@ -26,6 +29,7 @@ class Pet {
       age: json['edad'] as int,
       weight: double.parse(json['peso'].toString()),
       userId: json['owner_id'] as String,
+      gender: json['gender'] as String?,
       imageUrl: json['image_url'] as String?,
     );
   }
@@ -38,6 +42,7 @@ class Pet {
       'edad': age,
       'peso': weight,
       'owner_id': userId,
+      'gender': gender,
       'image_url': imageUrl,
     };
   }

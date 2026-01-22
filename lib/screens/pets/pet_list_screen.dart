@@ -4,6 +4,7 @@ import 'package:pawtastic/models/pet.dart';
 import 'package:pawtastic/providers/pet_provider.dart';
 import 'package:pawtastic/providers/auth_provider.dart';
 import 'package:pawtastic/screens/pets/pet_register_screen.dart';
+import 'package:pawtastic/screens/pets/pet_detail_screen.dart';
 import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 
@@ -162,13 +163,19 @@ class _PetCard extends StatelessWidget {
       ),
       child: InkWell(
         onTap: () {
-          // Navegar al detalle de la mascota
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => PetDetailScreen(pet: pet),
+            ),
+          );
         },
         borderRadius: BorderRadius.circular(16),
         child: Padding(
           padding: const EdgeInsets.all(12),
           child: Row(
             children: [
+              // ... (código del Hero y la imagen sin cambios)
               Hero(
                 tag: 'pet-${pet.id}',
                 child: Container(
@@ -218,31 +225,155 @@ class _PetCard extends StatelessWidget {
                     ),
                     const SizedBox(height: 4),
                     Text(
-                      '${pet.breed} • ${pet.age} años',
+                      '${pet.species} - ${pet.breed}',
                       style: theme.textTheme.bodyMedium?.copyWith(
                         color: theme.colorScheme.onBackground.withOpacity(0.7),
                       ),
                     ),
                     const SizedBox(height: 4),
-                    Text(
-                      '${pet.weight} kg',
-                      style: theme.textTheme.bodySmall?.copyWith(
-                        color: theme.colorScheme.primary,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+                    Row(
+                      children: [
+                        Text(
+                          '${pet.age} años',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color:
+                                theme.colorScheme.onBackground.withOpacity(0.6),
+                          ),
+                        ),
+                        Text(
+                          ' • ${pet.weight} kg',
+                          style: theme.textTheme.bodySmall?.copyWith(
+                            color:
+                                theme.colorScheme.onBackground.withOpacity(0.6),
+                          ),
+                        ),
+                        if (pet.gender != null && pet.gender!.isNotEmpty)
+                          Text(
+                            ' • ${pet.gender}',
+                            style: theme.textTheme.bodySmall?.copyWith(
+                                color: pet.gender == 'Macho'
+                                    ? Colors.blue.shade700
+                                    : Colors.pink.shade700,
+                                fontWeight: FontWeight.w500),
+                          ),
+                      ],
+                    )
                   ],
                 ),
               ),
-              Icon(
-                Icons.arrow_forward_ios_rounded,
-                size: 16,
-                color: theme.colorScheme.onSurface.withOpacity(0.3),
-              ),
+              PopupMenuButton<String>(
+                icon: Icon(Icons.more_vert_rounded,
+                    color: theme.colorScheme.onSurface.withOpacity(0.5)),
+                onSelected: (value) {
+                  if (value == 'edit') {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) => PetRegisterScreen(petToEdit: pet),
+                      ),
+                    ).then((_) {
+                      if (context.mounted) {
+                        // <--- AÑADIR ESTA COMPROBACIÓN
+                        final authProvider =
+                            Provider.of<AuthProvider>(context, listen: false);
+                        if (authProvider.user != null) {
+                          Provider.of<PetProvider>(context, listen: false)
+                              .loadUserPets(authProvider.user!.id);
+                        }
+                      }
+                    });
+                  } else if (value == 'delete') {
+                    _showDeleteConfirmationDialog(context, pet);
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  const PopupMenuItem<String>(
+                    value: 'edit',
+                    child: ListTile(
+                      leading: Icon(Icons.edit_rounded),
+                      title: Text('Editar'),
+                    ),
+                  ),
+                  const PopupMenuItem<String>(
+                    value: 'delete',
+                    child: ListTile(
+                      leading: Icon(Icons.delete_rounded, color: Colors.red),
+                      title:
+                          Text('Eliminar', style: TextStyle(color: Colors.red)),
+                    ),
+                  ),
+                ],
+              )
             ],
           ),
         ),
       ),
+    );
+  }
+
+  void _showDeleteConfirmationDialog(BuildContext context, Pet petToDelete) {
+    final petProvider = Provider.of<PetProvider>(context, listen: false);
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+
+    showDialog(
+      context: context,
+      builder: (BuildContext dialogContext) {
+        final dialogTheme = Theme.of(dialogContext);
+        return AlertDialog(
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+          icon: Icon(Icons.warning_amber_rounded,
+              color: dialogTheme.colorScheme.error, size: 48),
+          title: Text(
+            'Lo sentimos... 😭',
+            style: dialogTheme.textTheme.titleLarge?.copyWith(
+              color: dialogTheme.colorScheme.error,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          content: RichText(
+            textAlign: TextAlign.center,
+            text: TextSpan(
+              style: dialogTheme.textTheme.bodyMedium?.copyWith(
+                  color: dialogTheme.colorScheme.onSurface.withOpacity(0.8)),
+              children: <TextSpan>[
+                const TextSpan(text: 'A veces las despedidas son difíciles.¿Estás seguro de que deseas eliminar a '),
+                TextSpan(
+                    text: petToDelete.name,
+                    style: const TextStyle(fontWeight: FontWeight.bold)),
+                const TextSpan(text: '?'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text('No',
+                  style: TextStyle(
+                      color:
+                          dialogTheme.colorScheme.onSurface.withOpacity(0.7))),
+              onPressed: () {
+                Navigator.of(dialogContext).pop();
+              },
+            ),
+            ElevatedButton.icon(
+              // icon: const Icon(Icons.delete_forever_rounded),
+              label: const Text('Despedirme 👋🏻'),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: dialogTheme.colorScheme.error,
+                foregroundColor: dialogTheme.colorScheme.onError,
+              ),
+              onPressed: () async {
+                Navigator.of(dialogContext).pop(); // Cerrar el diálogo
+                if (authProvider.user != null) {
+                  await petProvider.deletePet(
+                      petToDelete.id, authProvider.user!.id);
+                  // La lista se recargará automáticamente si loadUserPets se llama después o si el provider notifica cambios.
+                }
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 }
