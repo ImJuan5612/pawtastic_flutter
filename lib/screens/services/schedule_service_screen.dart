@@ -263,35 +263,35 @@ class _ScheduleServiceScreenState extends State<ScheduleServiceScreen> {
     }
   }
 
-  void _handleServiceSelection(
-      String? serviceName, ServiceCatalogProvider provider) {
-    if (serviceName == null) return;
+  // void _handleServiceSelection(
+  //     String? serviceName, ServiceCatalogProvider provider) {
+  //   if (serviceName == null) return;
 
-    final service = provider.services.firstWhere(
-      (s) => s.name == serviceName,
-      orElse: () => provider.services.first,
-    );
+  //   final service = provider.services.firstWhere(
+  //     (s) => s.name == serviceName,
+  //     orElse: () => provider.services.first,
+  //   );
 
-    setState(() {
-      _selectedServiceType = service.name;
-    });
-  }
+  //   setState(() {
+  //     _selectedServiceType = service.name;
+  //   });
+  // }
 
-  TimeOfDay _getInitialTime() {
-    if (_selectedTime != null) return _selectedTime!;
+  // TimeOfDay _getInitialTime() {
+  //   if (_selectedTime != null) return _selectedTime!;
 
-    final now = DateTime.now();
-    if (_selectedDate != null &&
-        _selectedDate!.year == now.year &&
-        _selectedDate!.month == now.month &&
-        _selectedDate!.day == now.day) {
-      return TimeOfDay.fromDateTime(now.add(const Duration(
-          minutes:
-              1))); // Un minuto en el futuro para evitar conflictos exactos
-    }
-    return const TimeOfDay(
-        hour: 9, minute: 0); // Hora por defecto para otros días (ej. 9 AM)
-  }
+  //   final now = DateTime.now();
+  //   if (_selectedDate != null &&
+  //       _selectedDate!.year == now.year &&
+  //       _selectedDate!.month == now.month &&
+  //       _selectedDate!.day == now.day) {
+  //     return TimeOfDay.fromDateTime(now.add(const Duration(
+  //         minutes:
+  //             1))); // Un minuto en el futuro para evitar conflictos exactos
+  //   }
+  //   return const TimeOfDay(
+  //       hour: 9, minute: 0); // Hora por defecto para otros días (ej. 9 AM)
+  // }
 
   // Modificar el widget que muestra la hora seleccionada
   Widget _buildTimeSelector(BuildContext context) {

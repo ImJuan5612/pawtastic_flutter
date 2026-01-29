@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:pawtastic/providers/auth_provider.dart';
 import 'package:animate_do/animate_do.dart';
 
 class SettingsScreen extends StatefulWidget {
@@ -207,8 +205,6 @@ class _SettingsScreenState extends State<SettingsScreen> {
   }
 
   Widget _buildThemeSelector(BuildContext context) {
-    final theme = Theme.of(context);
-
     return ListTile(
       title: const Text('Tema'),
       subtitle: Text(_themeMode.name.toUpperCase()),

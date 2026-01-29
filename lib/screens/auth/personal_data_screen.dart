@@ -76,7 +76,7 @@ class _PersonalDataScreenState extends State<PersonalDataScreen> {
   }
 
   Future<void> _pickImage(ImageSource source) async {
-    final ImagePicker picker = ImagePicker();
+    // final ImagePicker picker = ImagePicker();
     // Usar el ImageService que ya tienes para consistencia y permisos
     // final XFile? image = await picker.pickImage(source: source, imageQuality: 70);
     final File? imageFile = await ImageService.pickImage(

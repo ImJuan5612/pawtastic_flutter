@@ -8,7 +8,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:intl/intl.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:pawtastic/screens/pets/pet_register_screen.dart';
 import 'package:pawtastic/providers/auth_provider.dart';
 

@@ -44,19 +44,14 @@ class _ServiceHistoryScreenState extends State<ServiceHistoryScreen> {
           id,
           pet_id,
           user_id,
-          tipo_servicio,
-          fecha,
-          estado,
-          notas,
-          costo_servicio,
+          type,
+          date,
+          description,
+          cost,
+          completed,
           created_at,
           updated_at,
-          hotels (
-            id,
-            name,
-            price
-          )
-        ''').eq('user_id', userId).order('fecha', ascending: false);
+        ''').eq('user_id', userId).order('date', ascending: false);
 
       final List<Service> loadedServices = (response as List)
           .map((data) => Service.fromJson(data as Map<String, dynamic>))

@@ -3,7 +3,6 @@ import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:pawtastic/providers/auth_provider.dart';
 import 'package:pawtastic/providers/payment_provider.dart';
-import 'package:pawtastic/models/user_payment_method.dart';
 import 'package:pawtastic/screens/wallet/add_payment_method_screen.dart'; // Crearemos esta pantalla
 import 'package:animate_do/animate_do.dart';
 

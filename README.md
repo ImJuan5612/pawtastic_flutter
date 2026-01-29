@@ -6,7 +6,7 @@
 ![Supabase](https://img.shields.io/badge/Supabase-3ECF8E?style=for-the-badge&logo=supabase&logoColor=white)
 ![Dart](https://img.shields.io/badge/dart-%230175C2.svg?style=for-the-badge&logo=dart&logoColor=white)
 
-**La solución definitiva para el cuidado y gestión de tus mascotas.**
+**El lugar perfecto para el cuidado de tus mascotas.**
 
 [Ver Documentación Técnica Detallada](./PROJECT_DETAILS.md)
 
@@ -16,13 +16,13 @@
 
 ## 📖 Descripción
 
-**Pawtastic** es una aplicación móvil moderna diseñada para facilitar la vida de los dueños de mascotas. Desde la gestión de perfiles médicos hasta la reserva de servicios exclusivos como hoteles y spas, Pawtastic centraliza todo lo que necesitas para el bienestar de tu compañero peludo.
+**Pawtastic** es una aplicación móvil moderna diseñada para facilitar la vida de los dueños de mascotas. Desde la gestión de perfiles médicos hasta la reserva de servicios exclusivos como hoteles, Pawtastic se enfoca en todo lo que necesitas para el bienestar de tu compañero peludo.
 
 ## ✨ Características Principales
 
-*   **🔐 Autenticación Segura**: Registro e inicio de sesión protegidos con Supabase.
+<!-- *   **🔐 Autenticación Segura**: Registro e inicio de sesión protegidos con Supabase. -->
 *   **🐶 Gestión de Perfiles**: Crea y administra perfiles detallados para cada una de tus mascotas.
-*   **🏨 Servicios Premium**: Reserva hoteles, guarderías y spas directamente desde la app.
+*   **🏨 Servicios Premium**: Reserva hoteles, guarderías y spas directamente desde la app. Sin ningún intermediario.
 *   **💳 Billetera Digital**: Gestiona tus métodos de pago y revisa tu historial de transacciones.
 *   **📅 Calendario Integrado**: Mantén un registro de citas y reservas importantes.
 *   **📡 Modo Offline**: Funcionalidad básica disponible incluso sin conexión a internet.
