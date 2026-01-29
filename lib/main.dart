@@ -13,11 +13,14 @@ import 'package:pawtastic/services/connectivity_service.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:pawtastic/providers/hotel_provider.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   await SupabaseConfig.initialize();
   // Inicializar datos de formato para los locales que usarás (ej. español de México)
+
   await initializeDateFormatting('es_MX', null);
 
   runApp(const MyApp());

@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 class SupabaseConfig {
   // Reemplaza estas URLs con las de tu proyecto en Supabase
-  static const String supabaseUrl = 'https://qgdrvjcjflumviomjouf.supabase.co';
-  static const String supabaseAnonKey =
-      'sb_publishable_FuJOZmb88jySvrZBwW3xIw_8Hp4PqOG'; // Encuentra esto en Project Settings > API
+  static String supabaseUrl = dotenv.env['SUPABASE_URL'] ?? '';
+  static String supabaseAnonKey = dotenv.env['SUPABASE_KEY'] ?? '';
 
   // Constantes para storage
   static const String petsBucket = 'pets';
@@ -51,5 +51,3 @@ class SupabaseConfig {
 
   static SupabaseClient get client => Supabase.instance.client;
 }
-
-// 'MetalPiano815' password for the Supabase database

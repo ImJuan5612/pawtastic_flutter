@@ -14,34 +14,33 @@
 
 ---
 
-## 📖 Descripción
+## Descripción
 
 **Pawtastic** es una aplicación móvil moderna diseñada para facilitar la vida de los dueños de mascotas. Desde la gestión de perfiles médicos hasta la reserva de servicios exclusivos como hoteles, Pawtastic se enfoca en todo lo que necesitas para el bienestar de tu compañero peludo.
 
-## ✨ Características Principales
+## Características Principales
 
-<!-- *   **🔐 Autenticación Segura**: Registro e inicio de sesión protegidos con Supabase. -->
-*   **🐶 Gestión de Perfiles**: Crea y administra perfiles detallados para cada una de tus mascotas.
-*   **🏨 Servicios Premium**: Reserva hoteles, guarderías y spas directamente desde la app. Sin ningún intermediario.
-*   **💳 Billetera Digital**: Gestiona tus métodos de pago y revisa tu historial de transacciones.
-*   **📅 Calendario Integrado**: Mantén un registro de citas y reservas importantes.
-*   **📡 Modo Offline**: Funcionalidad básica disponible incluso sin conexión a internet.
++   **Gestión de Perfiles**: Crea y administra perfiles detallados para cada una de tus mascotas.
++   **Servicios Premium**: Reserva tus servicios preferidos directamente desde la app. Sin ningún intermediario.
++   **Billetera Digital**: Gestiona tus métodos de pago y revisa tu historial de transacciones.
++   **Calendario Integrado**: Mantén un registro de citas y reservas importantes.
++   **Modo Offline**: Funcionalidad básica disponible incluso sin conexión a internet.
 
-## 🚀 Comenzando
+## Comenzando
 
 Sigue estos pasos para ejecutar el proyecto en tu entorno local.
 
 ### Prerrequisitos
 
-*   [Flutter SDK](https://flutter.dev/docs/get-started/install) instalado.
-*   Un proyecto configurado en [Supabase](https://supabase.com/).
+*   Tener [Flutter SDK](https://flutter.dev/docs/get-started/install) instalado.
+*   Tener las llaves del proyecto en [Supabase](https://supabase.com/). [Solicítalas aquí](https://supabase.com/)
 
 ### Instalación
 
 1.  **Clonar el repositorio**:
     ```bash
-    git clone https://github.com/tu-usuario/pawtastic.git
-    cd pawtastic
+    git clone https://github.com/ImJuan5612/pawtastic_flutter.git
+    cd pawtastic_flutter
     ```
 
 2.  **Instalar dependencias**:
@@ -50,20 +49,16 @@ Sigue estos pasos para ejecutar el proyecto en tu entorno local.
     ```
 
 3.  **Configurar Supabase**:
-    Asegúrate de configurar tus credenciales en `lib/config/supabase_config.dart`.
+    Asegúrate de configurar tus credenciales en `.env.example`.
 
 4.  **Ejecutar la App**:
     ```bash
     flutter run
     ```
 
-## 📚 Documentación Técnica
+### ¿Deseas agregar mejoras dentro de la app?
 
-Para una inmersión profunda en la arquitectura del proyecto, el stack tecnológico detallado y la explicación de los módulos, consulta nuestro archivo de detalles del proyecto:
-
-👉 **[Leer Documentación Técnica (PROJECT_DETAILS.md)](./PROJECT_DETAILS.md)**
-
----
+Puedes contactarme en [LinkedIn](https://www.linkedin.com/in/juan-villaverde-984b5520b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app) o [GitHub](https://github.com/ImJuan5612).
 
 <div align="center">
   Hecho con ❤️ por el equipo de Pawtastic
